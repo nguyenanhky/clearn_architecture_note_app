@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -19,14 +20,17 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.devcomentry.noteapp.presenter.update_note.AddEditNoteEvent
 
 @Composable
 fun AddNoteScreen(
     navController: NavController,
-    addNoteViewModel: AddNoteViewModel,
+    addNoteViewModel: AddNoteViewModel = hiltViewModel()
 ) {
     val title = addNoteViewModel.title.value
     val content = addNoteViewModel.content.value
@@ -39,9 +43,11 @@ fun AddNoteScreen(
                 onClick = {
                     if (title.isBlank()) {
                         Toast.makeText(context, "title  is empty", Toast.LENGTH_SHORT).show()
+                        return@FloatingActionButton
                     }
                     if (content.isBlank()) {
                         Toast.makeText(context, "content  is empty", Toast.LENGTH_SHORT).show()
+                        return@FloatingActionButton
 
                     }
                     addNoteViewModel.onEvent(AddEditNoteEvent.SaveNote)
@@ -64,14 +70,12 @@ fun AddNoteScreen(
                 label = {
                     Text(text = "Title")
                 },
-                textStyle = MaterialTheme.typography.h6 
+                textStyle = MaterialTheme.typography.h6,
+                modifier = Modifier.fillMaxWidth()
 
             )
             Spacer(Modifier.height(16.dp))
             OutlinedTextField(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .padding(32.dp),
                 value = content,
                 onValueChange = {
                     addNoteViewModel.onEvent(AddEditNoteEvent.EnterContent(it))
@@ -79,7 +83,10 @@ fun AddNoteScreen(
                 label = {
                     Text(text = "Content")
                 },
-                textStyle = MaterialTheme.typography.h6
+                textStyle = MaterialTheme.typography.body1,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = 60.dp)
 
             )
         }

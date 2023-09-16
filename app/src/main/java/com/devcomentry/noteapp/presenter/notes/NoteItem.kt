@@ -2,6 +2,7 @@ package com.devcomentry.noteapp.presenter.notes
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -27,7 +28,7 @@ fun NoteItem(
     ) {
         Column(
             modifier = Modifier
-                .matchParentSize()
+                .fillMaxWidth()
                 .padding(8.dp)
                 .padding(32.dp)
         ) {

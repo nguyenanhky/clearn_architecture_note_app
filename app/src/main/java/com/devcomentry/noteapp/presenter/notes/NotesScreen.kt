@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.devcomentry.noteapp.presenter.navigation.Screen
 import kotlinx.coroutines.launch
 
 
@@ -35,7 +36,9 @@ fun NotesScreen(
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = {},
+                onClick = {
+                    navController.navigate(Screen.AddNoteScreen.route)
+                },
                 content = {
                     Icon(imageVector = Icons.Default.Add, contentDescription = null)
                 }

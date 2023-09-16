@@ -3,6 +3,9 @@ package com.devcomentry.noteapp.presenter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import com.devcomentry.noteapp.presenter.navigation.Navigation
 import com.devcomentry.noteapp.ui.theme.CleanArchitectureTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -14,7 +17,10 @@ class MainActivity : AppCompatActivity() {
 
         setContent {
             CleanArchitectureTheme {
-                // setup compose
+                Surface(
+                    color = MaterialTheme.colors.background,
+                    content = { Navigation() }
+                )
             }
         }
     }

@@ -1,7 +1,7 @@
 package com.devcomentry.noteapp.di
 
+import android.app.Application
 import androidx.room.Room
-import com.devcomentry.noteapp.NoteApplication
 import com.devcomentry.noteapp.data.data_source.NoteDatabase
 import com.devcomentry.noteapp.data.repositoery.NoteRepositoryImpl
 import com.devcomentry.noteapp.demain.repositoery.NoteRepository
@@ -14,16 +14,17 @@ import com.devcomentry.noteapp.demain.use_case.UpdateNote
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 
 @Module
-@InstallIn(Singleton::class)
+@InstallIn(SingletonComponent::class)
 object AppModule {
 
     @Provides
     @Singleton
-    fun provideDatabase(application: NoteApplication): NoteDatabase = Room.databaseBuilder(
+    fun provideDatabase(application: Application): NoteDatabase = Room.databaseBuilder(
         application,
         NoteDatabase::class.java,
         NoteDatabase.DB_NAME

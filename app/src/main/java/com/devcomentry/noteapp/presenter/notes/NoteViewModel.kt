@@ -8,6 +8,7 @@ import com.devcomentry.noteapp.demain.model.Note
 import com.devcomentry.noteapp.demain.use_case.NoteUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,6 +24,10 @@ class NoteViewModel @Inject constructor(
     private var job: Job? = null
     private var deleteNote: Note? = null
 
+    init {
+        getNotes()
+    }
+
     fun onEvent(event: NoteEvent) {
         if (event is NoteEvent.DeleteNote) {
             viewModelScope.launch {
@@ -36,12 +41,11 @@ class NoteViewModel @Inject constructor(
         }
     }
 
-    private fun getNotees() {
+    private fun getNotes() {
         job?.cancel()
-        job = viewModelScope.launch {
-            noteUseCases.getNotes().onEach {
-                _notesState.value = it
-            }
-        }
+        job = noteUseCases.getNotes().onEach {
+            _notesState.value = it
+        }.launchIn(viewModelScope)
+
     }
 }
